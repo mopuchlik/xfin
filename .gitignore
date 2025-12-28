@@ -1,0 +1,73 @@
+############################
+# Python
+############################
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+
+############################
+# Virtual environments
+############################
+.venv/
+venv/
+env/
+ENV/
+
+############################
+# uv / dependency management
+############################
+# lockfile should be committed
+# uv.lock
+
+# uv internal cache (if any)
+.uv/
+.uv-cache/
+
+############################
+# Data (VERY IMPORTANT)
+############################
+# Raw / intermediate / processed data
+data/raw/
+data/interim/
+data/processed/
+
+# Common data formats
+*.csv
+*.tsv
+*.parquet
+*.pq
+*.feather
+*.arrow
+*.mst
+
+############################
+# Logs / outputs
+############################
+*.log
+logs/
+outputs/
+
+############################
+# Jupyter / notebooks
+############################
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+############################
+# IDEs / editors
+############################
+.vscode/
+.idea/
+*.iml
+
+############################
+# OS
+############################
+.DS_Store
+Thumbs.db
