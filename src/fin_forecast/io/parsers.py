@@ -27,14 +27,16 @@ class MstBarParser(BarParser):
             {"data_file": filename or "<unknown>"},
         )
 
-        skipped = 0
+        skipped_empty = 0
+        skipped_badcols = 0
+        skipped_other = 0
 
         for line in lines:
             line = line.strip()
 
             # skip empty lines
             if not line:
-                skipped += 1
+                skipped_empty += 1
                 continue
 
             # handle BOM (Byte Order Mark)
@@ -44,13 +46,19 @@ class MstBarParser(BarParser):
 
             parts = [p.strip() for p in line.split(self.delimiter)]
             if len(parts) != 7:
-                skipped += 1
+                skipped_badcols += 1
                 continue
 
             try:
                 yield OHLCVBar.from_fields(parts)
             except Exception:
-                skipped += 1
+                skipped_other += 1
 
-        if skipped:
-            logger.debug("Skipped %d malformed/empty rows", skipped)
+        # Log only if anything interesting happened
+        if skipped_empty or skipped_badcols or skipped_other:
+            logger.debug(
+                "Skipped rows: empty=%d badcols=%d other=%d",
+                skipped_empty,
+                skipped_badcols,
+                skipped_other,
+            )
