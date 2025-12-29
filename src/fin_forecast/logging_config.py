@@ -6,6 +6,13 @@ from pathlib import Path
 from typing import Optional
 
 
+class DefaultContextFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        if not hasattr(record, "data_file"):
+            record.data_file = "-"
+        return True
+
+
 def setup_logging(*, level: str = "INFO", log_file: Optional[str] = None) -> None:
     """
     Configure root logging once for the app.
@@ -21,13 +28,17 @@ def setup_logging(*, level: str = "INFO", log_file: Optional[str] = None) -> Non
 
     root.setLevel(numeric)
 
-    fmt = "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+    fmt = "%(asctime)s | %(levelname)s | %(name)s | src=%(filename)s | data=%(data_file)s | %(message)s"
+
     datefmt = "%Y-%m-%d %H:%M:%S"
     formatter = logging.Formatter(fmt=fmt, datefmt=datefmt)
+
+    context_filter = DefaultContextFilter()  # NEW
 
     ch = logging.StreamHandler(sys.stderr)
     ch.setLevel(numeric)
     ch.setFormatter(formatter)
+    ch.addFilter(context_filter)  # NEW
     root.addHandler(ch)
 
     if log_file:
@@ -36,4 +47,5 @@ def setup_logging(*, level: str = "INFO", log_file: Optional[str] = None) -> Non
         fh = logging.FileHandler(path, encoding="utf-8")
         fh.setLevel(numeric)
         fh.setFormatter(formatter)
+        fh.addFilter(context_filter)  # NEW
         root.addHandler(fh)

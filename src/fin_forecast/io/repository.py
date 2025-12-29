@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 import asyncio
 from dataclasses import dataclass
 from typing import Iterator, Sequence
@@ -22,11 +23,15 @@ class MstRepository(BarRepository):
         async def load_one(loc: str) -> list[OHLCVBar]:
             async with sem:
                 text = await self.source.read_text(loc, encoding=self.encoding)
-                return list(self.parser.parse_lines(text.splitlines()))
+
+                name = Path(loc).name or loc
+
+                return list(
+                    self.parser.parse_lines(text.splitlines(), filename=name)
+                )
 
         tasks = [asyncio.create_task(load_one(loc)) for loc in self.locators]
 
         for fut in asyncio.as_completed(tasks):
             for bar in await fut:
                 yield bar
-
