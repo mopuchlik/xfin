@@ -45,7 +45,7 @@ class MstBarParser(BarParser):
                 continue
 
             parts = [p.strip() for p in line.split(self.delimiter)]
-            if len(parts) != 7:
+            if len(parts) not in (7, 8):
                 skipped_badcols += 1
                 continue
 

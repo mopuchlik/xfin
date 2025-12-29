@@ -21,6 +21,7 @@ class BarDatasetBuilder:
                 BarField.LOW.value: b.low,
                 BarField.CLOSE.value: b.close,
                 BarField.VOL.value: b.vol,
+                BarField.OPENINT.value: getattr(b, "openint", float("nan")),
             }
             for b in bars
         ]

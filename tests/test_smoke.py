@@ -12,6 +12,8 @@ def test_pipeline_smoke(tmp_path: Path):
     mst.write_text(
         "AAA,20240102,10,11,9,10.5,100\n"
         "AAA,20240103,10.5,12,10,11,150\n"
+        "BBB,20240102,10,11,9,10.5,100,1\n"
+        "BBB,20240103,10.5,12,10,11,150,2\n"
     )
 
     pipeline = BuildDatasetPipeline()
@@ -21,7 +23,8 @@ def test_pipeline_smoke(tmp_path: Path):
 
     # assert
     assert isinstance(df, pd.DataFrame)
-    assert len(df) == 2
+    assert len(df) == 4
     assert set(df.columns).issuperset(
-        {"ticker", "date", "open", "high", "low", "close", "vol"}
+        {"ticker", "dt", "open", "high", "low", "close", "vol", "openint"}
     )
+    assert df["openint"].isna().any()
