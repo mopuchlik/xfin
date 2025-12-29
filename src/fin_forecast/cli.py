@@ -2,10 +2,14 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import logging  # NEW
 import sys
 from pathlib import Path
 
 from fin_forecast.core.pipeline import BuildDatasetPipeline
+from fin_forecast.logging_config import setup_logging  # NEW
+
+logger = logging.getLogger(__name__)  # NEW
 
 
 def main() -> int:
@@ -23,14 +27,32 @@ def main() -> int:
         default="data/processed/bars",
         help="Output directory for partitioned Parquet dataset (partitioned by ticker)",
     )
+
+    # NEW: logging args
+    p.add_argument(
+        "--log-level",
+        default="INFO",
+        help="DEBUG, INFO, WARNING, ERROR",
+    )
+    p.add_argument(
+        "--log-file",
+        default=None,
+        help="Optional log file path, e.g. logs/run.log",
+    )
+
     args = p.parse_args()
+
+    # NEW: configure logging once, early
+    try:
+        setup_logging(level=args.log_level, log_file=args.log_file)
+    except ValueError as e:
+        print(f"Invalid log level: {e}", file=sys.stderr)
+        return 2
 
     try:
         pipeline = BuildDatasetPipeline()
 
         folder = Path(args.folder) if args.folder else None
-        df = asyncio.run(pipeline.run(folder=folder, pattern=args.pattern))
-
         out_path = Path(args.out)
 
         # Safety: for partitioned parquet, --out must be a directory, not a *.parquet file
@@ -42,6 +64,17 @@ def main() -> int:
 
         out_path.mkdir(parents=True, exist_ok=True)
 
+        logger.info(
+            "Starting dataset build (folder=%s, pattern=%s, out=%s)",
+            folder if folder else "data/raw (default in pipeline?)",
+            args.pattern,
+            out_path,
+        )
+
+        df = asyncio.run(pipeline.run(folder=folder, pattern=args.pattern))
+
+        logger.info("Built dataframe: rows=%s, cols=%s", f"{len(df):,}", df.shape[1])
+
         # Write partitioned dataset
         df.to_parquet(
             out_path,
@@ -49,31 +82,33 @@ def main() -> int:
             partition_cols=["ticker"],
         )
 
-        print(
-            f"Saved partitioned dataset to {out_path} "
-            f"(rows={len(df):,}, tickers={df['ticker'].nunique()})"
+        logger.info(
+            "Saved partitioned dataset to %s (rows=%s, tickers=%s)",
+            out_path,
+            f"{len(df):,}",
+            df["ticker"].nunique() if "ticker" in df.columns else "N/A",
         )
         return 0
 
     except KeyboardInterrupt:
-        print("Interrupted.", file=sys.stderr)
+        logger.warning("Interrupted by user.")
         return 130
     except FileNotFoundError as e:
-        print(f"File/folder not found: {e}", file=sys.stderr)
+        logger.error("File/folder not found: %s", e)
         return 2
     except ValueError as e:
-        print(f"Invalid arguments/data: {e}", file=sys.stderr)
+        logger.error("Invalid arguments/data: %s", e)
         return 2
     except ImportError as e:
         # Common case: missing parquet engine (pyarrow/fastparquet)
-        print(
-            f"Import error: {e}\n"
-            "If this is about Parquet, install a Parquet engine, e.g.: uv add pyarrow",
-            file=sys.stderr,
+        logger.error(
+            "Import error: %s. If this is about Parquet, install an engine, e.g.: uv add pyarrow",
+            e,
         )
         return 1
-    except Exception as e:
-        print(f"Unexpected error: {type(e).__name__}: {e}", file=sys.stderr)
+    except Exception:
+        # NEW: logs stack trace automatically
+        logger.exception("Unexpected error")
         return 1
 
 
