@@ -30,3 +30,4 @@ packages = ["src/xfin"]
 
 [project.scripts]
 xfin-data = "xfin.data_engine.cli:main"
+xfin-forecast = "xfin.forecaster.cli:main"

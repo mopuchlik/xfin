@@ -6,7 +6,8 @@ uv run python -m xfin.data_engine \
   --log-level=DEBUG \
   --log-file logs/xfin.data_engine.log
 
-uv run python -m xfin.data_engine --help  
+uv run xfin-data --help
+uv run xfin-forecast --help
 
 ### runner for script
 uv run python scripts/load_bars.py
