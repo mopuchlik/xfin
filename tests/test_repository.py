@@ -1,9 +1,9 @@
 import asyncio
 from pathlib import Path
 
-from fin_forecast.io.repository import MstRepository
-from fin_forecast.io.parsers import MstBarParser
-from fin_forecast.io.sources import LocalFileSource
+from xfin.data_engine.io.repository import MstRepository
+from xfin.data_engine.io.parsers import MstBarParser
+from xfin.data_engine.io.sources import LocalFileSource
 
 
 def test_repository_iter_bars(tmp_path: Path):

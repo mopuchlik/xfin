@@ -7,11 +7,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from fin_forecast.config import AppConfig
-from fin_forecast.features.builder import BarDatasetBuilder
-from fin_forecast.io.parsers import MstBarParser
-from fin_forecast.io.repository import MstRepository
-from fin_forecast.io.sources import LocalFileSource
+from xfin.data_engine.config import AppConfig
+from xfin.data_engine.features.builder import BarDatasetBuilder
+from xfin.data_engine.io.parsers import MstBarParser
+from xfin.data_engine.io.repository import MstRepository
+from xfin.data_engine.io.sources import LocalFileSource
 
 logger = logging.getLogger(__name__)
 

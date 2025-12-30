@@ -2,7 +2,7 @@ import asyncio
 from pathlib import Path
 import pytest
 
-from fin_forecast.core.pipeline import BuildDatasetPipeline
+from xfin.data_engine.core.pipeline import BuildDatasetPipeline
 
 
 def test_pipeline_missing_folder():

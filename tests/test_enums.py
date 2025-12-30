@@ -1,7 +1,7 @@
 import asyncio
 
-from fin_forecast.domain.models import BarField
-from fin_forecast.core.pipeline import BuildDatasetPipeline
+from xfin.data_engine.domain.models import BarField
+from xfin.data_engine.core.pipeline import BuildDatasetPipeline
 
 
 def test_barfield_values():

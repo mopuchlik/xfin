@@ -5,7 +5,7 @@ from pathlib import Path
 
 from dataclasses import dataclass
 
-from fin_forecast.domain.types import ByteSource
+from xfin.data_engine.domain.types import ByteSource
 
 
 @dataclass

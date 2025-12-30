@@ -6,8 +6,8 @@ import logging  # NEW
 import sys
 from pathlib import Path
 
-from fin_forecast.core.pipeline import BuildDatasetPipeline
-from fin_forecast.logging_config import setup_logging  # NEW
+from xfin.data_engine.core.pipeline import BuildDatasetPipeline
+from xfin.data_engine.logging_config import setup_logging  # NEW
 
 logger = logging.getLogger(__name__)  # NEW
 

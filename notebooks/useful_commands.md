@@ -1,10 +1,15 @@
-### runner
-uv run python -m fin_forecast \
+### runner for module
+uv run python -m xfin.data_engine \
   --folder data/raw \
   --pattern "**/*.mst" \
   --out data/processed/bars \
   --log-level=DEBUG \
-  --log-file logs/fin_forecast.log
+  --log-file logs/xfin.data_engine.log
+
+uv run python -m xfin.data_engine --help  
+
+### runner for script
+uv run python scripts/load_bars.py
 
 ### tests
 uv run pytest

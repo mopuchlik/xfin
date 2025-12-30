@@ -1,7 +1,7 @@
 import asyncio
 from pathlib import Path
 
-from fin_forecast.core.pipeline import BuildDatasetPipeline
+from xfin.data_engine.core.pipeline import BuildDatasetPipeline
 
 
 def test_pipeline_async_deterministic(tmp_path: Path):

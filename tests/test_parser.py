@@ -1,5 +1,5 @@
-from fin_forecast.io.parsers import MstBarParser
-from fin_forecast.domain.models import OHLCVBar
+from xfin.data_engine.io.parsers import MstBarParser
+from xfin.data_engine.domain.models import OHLCVBar
 
 
 def test_mst_parser_single_line():

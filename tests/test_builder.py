@@ -2,8 +2,8 @@ from datetime import date
 
 import pandas as pd
 
-from fin_forecast.domain.models import OHLCVBar
-from fin_forecast.features.builder import BarDatasetBuilder
+from xfin.data_engine.domain.models import OHLCVBar
+from xfin.data_engine.features.builder import BarDatasetBuilder
 
 
 def test_builder_creates_dataframe():

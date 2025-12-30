@@ -5,8 +5,8 @@ import asyncio
 from dataclasses import dataclass
 from typing import Iterator, Sequence
 
-from fin_forecast.domain.models import OHLCVBar
-from fin_forecast.domain.types import BarParser, BarRepository, ByteSource
+from xfin.data_engine.domain.models import OHLCVBar
+from xfin.data_engine.domain.types import BarParser, BarRepository, ByteSource
 
 
 @dataclass

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass
 
-from fin_forecast.domain.models import BarField, OHLCVBar
+from xfin.data_engine.domain.models import BarField, OHLCVBar
 
 
 @dataclass
