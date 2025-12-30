@@ -20,4 +20,5 @@ CRITICAL	50	Program cannot continue
 
 
 
-
+### tree
+tree -I "*.parquet|*.mst|*.csv|*.pyc"
