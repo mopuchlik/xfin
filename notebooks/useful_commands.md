@@ -1,3 +1,8 @@
+### uv synchro after clone
+uv sync
+uv sync --group dev   
+
+
 ### runner for module
 uv run python -m xfin.data_engine \
   --folder data/raw \
