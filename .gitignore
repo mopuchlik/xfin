@@ -47,6 +47,19 @@ data/processed/
 *.mst
 
 ############################
+# Allow example MST file
+############################
+!data/
+!data/raw/
+!data/raw/WIG-POLAND.mst
+!data/raw/WIG.mst
+!data/raw/SWIG80.mst
+!data/raw/WIG20.mst
+!data/raw/WIG-BANKI.mst
+!data/raw/MBANK.mst
+!data/raw/MILLENNIUM.mst
+
+############################
 # Logs / outputs
 ############################
 *.log
