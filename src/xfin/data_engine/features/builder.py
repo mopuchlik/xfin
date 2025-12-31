@@ -33,11 +33,11 @@ class BarDatasetBuilder:
         df = df.sort_values([BarField.TICKER.value, BarField.DATE.value]).reset_index(drop=True)
 
         if self.add_basic_features:
-            df = self._add_features(df)
+            df = self._add_generic_features(df)
 
         return df
 
-    def _add_features(self, df: pd.DataFrame) -> pd.DataFrame:
+    def _add_generic_features(self, df: pd.DataFrame) -> pd.DataFrame:
         t = BarField.TICKER.value
         d = BarField.DATE.value
         c = BarField.CLOSE.value
