@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 from xfin.data_engine.core.pipeline import BuildDatasetPipeline
-from xfin.data_engine.logging_config import setup_logging  # NEW
+from xfin.logging_config import setup_logging
 
 logger = logging.getLogger(__name__)  # NEW
 

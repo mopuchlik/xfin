@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from xfin.data_engine.logging_config import setup_logging
+from xfin.logging_config import setup_logging
 from xfin.forecaster.diagnostics import mae
 from xfin.forecaster.registry import list_models
 from xfin.forecaster.runner import RunConfig, run_forecast
