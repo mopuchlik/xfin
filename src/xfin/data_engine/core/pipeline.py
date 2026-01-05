@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from xfin.data_engine.config import AppConfig
+from xfin.config import AppConfig
 from xfin.data_engine.features.builder import BarDatasetBuilder
 from xfin.data_engine.io.parsers import MstBarParser
 from xfin.data_engine.io.repository import MstRepository
@@ -20,24 +20,27 @@ logger = logging.getLogger(__name__)
 class BuildDatasetPipeline:
     cfg: AppConfig = AppConfig()
 
-    async def run(self, folder: Path | None = None, pattern: str = "*.mst") -> pd.DataFrame:
+    async def run(
+        self, folder: Path | None = None, pattern: str = "*.mst"
+    ) -> pd.DataFrame:
         t0 = time.perf_counter()
 
-        folder = folder or self.cfg.raw_dir
+        folder = folder or self.cfg.data_engine.raw_dir
         logger.info("Building dataset from folder=%s pattern=%s", folder, pattern)
 
         paths = sorted(str(p) for p in Path(folder).glob(pattern))
         logger.info("Found %d files", len(paths))
 
         if not paths:
-            # Clear failure rather than crashing later or producing empty output
-            raise FileNotFoundError(f"No files matched pattern={pattern!r} in folder={str(folder)!r}")
+            raise FileNotFoundError(
+                f"No files matched pattern={pattern!r} in folder={str(folder)!r}"
+            )
 
         repo = MstRepository(
             locators=paths,
             source=LocalFileSource(),
             parser=MstBarParser(delimiter=",", has_header=True),
-            max_concurrency=self.cfg.max_concurrency,
+            max_concurrency=self.cfg.data_engine.max_concurrency,
         )
 
         bars = []
