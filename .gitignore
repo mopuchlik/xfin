@@ -62,8 +62,9 @@ data/processed/
 ############################
 # Logs / outputs
 ############################
+logs/*
 *.log
-logs/
+!logs/.gitkeep
 outputs/
 
 ############################
