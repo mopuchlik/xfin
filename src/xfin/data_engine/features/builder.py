@@ -52,7 +52,7 @@ class BarDatasetBuilder:
         # df.loc[bad_price, ["ret_1d", "log_ret_1d"]] = np.nan
 
         # other examples
-        df["vol_chg_1d"] = df.groupby(t)[v].pct_change()
-        df["month"] = df[d].dt.month
-        df["weekday"] = df[d].dt.weekday
+        # df["vol_chg_1d"] = df.groupby(t)[v].pct_change()
+        # df["month"] = df[d].dt.month
+        # df["weekday"] = df[d].dt.weekday
         return df
