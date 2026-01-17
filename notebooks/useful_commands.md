@@ -32,10 +32,23 @@ uv run python -m xfin.forecaster \
   --log-level DEBUG \
   --log-file logs/xfin.forecaster.log
 
+uv run python -m xfin.forecaster \
+  --model xgb_panel \
+  --data-parquet data/processed/bars \
+  --tickers MBANK WIG20 \
+  --date-min 2022-01-01 \
+  --date-max 2024-12-31 \
+  --artifact data/interim/xgb_panel.joblib
+
 uv run xfin-forecast --help
 
 # runner for script
 uv run python scripts/load_bars.py
+
+uv run python scripts/load_bars.py \
+  --root data/processed/bars \
+  --date-min 2024-01-01 \
+  --out data/parquet/bars_stacked.parquet
 
 # tests
 uv run pytest
