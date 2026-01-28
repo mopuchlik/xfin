@@ -3,14 +3,20 @@ name = "xfin"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
+    "joblib>=1.5.3",
+    "lightgbm>=4.6.0",
     "matplotlib>=3.10.8",
-    "numpy>=2.4.0",
+    "numpy<2.4",
+    "optuna>=4.6.0",
     "pandas>=2.3.3",
-    "pyarrow>=22.0.0",
+    "pyarrow>=15,<20",
     "pydantic>=2.12.5",
+    "scikit-learn>=1.8.0",
     "seaborn>=0.13.2",
+    "torch>=2.10.0",
+    "xgboost>=3.1.2",
 ]
 
 [dependency-groups]
